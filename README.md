@@ -22,6 +22,18 @@ data section and other operating-system resources such as open files and signals
 A traditional/heavyweight process has a SINGLE THREAD of control.
 If process has MULTIPLE THREADS of control, it can perform more than a task at a time.
 
+<style>
+      table,
+      table td {
+        border: 1px solid #cccccc;
+      }
+      td {
+        height: 80px;
+        width: 160px;
+        text-align: center;
+        vertical-align: middle;
+      }
+    </style>
 <table>
   <tr>
   <th colspan='3'>SINGLE THREAD</th>
@@ -33,16 +45,15 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
   </tr>
   <tr>
     <td>registers</td>
-    <td colspan='2'>           stack</td>
+    <td colspan='2'>stack</td>
   </tr>
   <tr>
-    <td colspan='3'>          thread</td>
+    <td colspan='3'>thread</td>
   </tr>
 </table>
-
 <table>
   <tr>
-  <th colspan='3'>	MULTI-THREADED PROCESS</th>
+  <th colspan='3'>MULTI-THREADED PROCESS</th>
   </tr>
   <tr>
     <th>code</th>
