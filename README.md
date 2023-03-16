@@ -34,7 +34,6 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
   <tr>
     <td>registers</td>
     <td>stack</td>
-    <td>Germany</td>
   </tr>
   <tr>
     <td>thread</td>
