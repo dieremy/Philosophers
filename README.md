@@ -26,9 +26,7 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
 <html>
 <head>
    <style>
-      table, td, th {
-         border: 1px solid black;
-         width: 300px;
+     td, th {
 	 style="text-align:center";
       }
    </style>
