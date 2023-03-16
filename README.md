@@ -42,7 +42,7 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
 
 <table>
   <tr>
-  <th>\tMULTI-THREADED PROCESS</th>
+  <th>MULTI-THREADED PROCESS</th>
   </tr>
   <tr>
     <th>code</th>
