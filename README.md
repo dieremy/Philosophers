@@ -11,9 +11,9 @@ So each program has a number of processes associated with it and each process ha
 A thread is a basic unit of CPU utilization.
 
 Thread comprises ->
-		                THREAD ID
-			                  PROGRAM COUNTER
-				                    REGISTER SET
+		                THREAD ID;
+			                  PROGRAM COUNTER;
+				                    REGISTER SET;
 					                      A STACK
 
 It shares with other thread belonging to the same process its code section,
