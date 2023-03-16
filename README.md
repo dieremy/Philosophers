@@ -27,12 +27,10 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
   <head>
     <style>
       table,
-      table td {
+      table{
         border: 1px solid #cccccc;
       }
       td {
-        height: 80px;
-        width: 160px;
         text-align: center;
         vertical-align: middle;
       }
