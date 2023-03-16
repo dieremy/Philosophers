@@ -22,7 +22,10 @@ data section and other operating-system resources such as open files and signals
 A traditional/heavyweight process has a SINGLE THREAD of control.
 If process has MULTIPLE THREADS of control, it can perform more than a task at a time.
 
-<style>
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
       table,
       table td {
         border: 1px solid #cccccc;
@@ -34,6 +37,7 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
         vertical-align: middle;
       }
     </style>
+  </head>
 <table>
   <tr>
   <th colspan='3'>SINGLE THREAD</th>
