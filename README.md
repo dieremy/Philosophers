@@ -22,16 +22,6 @@ data section and other operating-system resources such as open files and signals
 A traditional/heavyweight process has a SINGLE THREAD of control.
 If process has MULTIPLE THREADS of control, it can perform more than a task at a time.
 
-<!DOCTYPE html>
-<html>
-<head>
-   <style>
-     td, th {
-	 style="text-align:center";
-      }
-   </style>
-</head>
-<body>
 <table>
   <tr>
   <th colspan='3'>SINGLE THREAD</th>
@@ -43,10 +33,10 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
   </tr>
   <tr>
     <td>registers</td>
-    <td colspan='2'>stack</td>
+    <td style="text-align:center" colspan='2'>stack</td>
   </tr>
   <tr>
-    <td colspan='3'>thread</td>
+    <td style="text-align:center" colspan='3'>thread</td>
   </tr>
 </table>
 <table>
@@ -74,8 +64,6 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
     <td>thread</td>
   </tr>
 </table>
-</body>
-</html>
 
 Benefits of multithreaded programming has 4 major categories:
 
