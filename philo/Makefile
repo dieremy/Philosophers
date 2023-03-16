@@ -17,18 +17,18 @@ FLAGS = -pthread -Wall -Werror -Wextra
 NAME = philo
 
 .o: .c
-	$(CC) $(FLAGS) -I $(SRC) -c $< -o $(NAME)
+	@$(CC) $(FLAGS) -I $(SRC) -c $< -o $(NAME)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) -o $(NAME)
 
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 
