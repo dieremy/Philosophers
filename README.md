@@ -22,7 +22,7 @@ data section and other operating-system resources such as open files and signals
 A traditional/heavyweight process has a SINGLE THREAD of control.
 If process has MULTIPLE THREADS of control, it can perform more than a task at a time.
 
-<table>
+<table style='text-align:center'>
   <tr>
   <th colspan='3'>SINGLE THREAD</th>
   </tr>
