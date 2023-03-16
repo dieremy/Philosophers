@@ -33,10 +33,10 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
   </tr>
   <tr>
     <td>registers</td>
-    <td colspan='2'>	stack</td>
+    <td colspan='2'>		stack</td>
   </tr>
   <tr>
-    <td colspan='3'>		thread</td>
+    <td colspan='3'>				thread</td>
   </tr>
 </table>
 
