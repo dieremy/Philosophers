@@ -40,6 +40,32 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
   </tr>
 </table>
 
+<table>
+  <tr>
+  <th>\tMULTI-THREADED PROCESS</th>
+  </tr>
+  <tr>
+    <th>code</th>
+    <th>data</th>
+    <th>files</th>
+  </tr>
+  <tr>
+    <td>registers</td>
+    <td>registers</td>
+    <td>registers</td>
+  </tr>
+  <tr>
+    <td>stack</td>
+    <td>stack</td>
+    <td>stack</td>
+  </tr>
+  <tr>
+    <td>thread</td>
+    <td>thread</td>
+    <td>thread</td>
+  </tr>
+</table>
+
 Benefits of multithreaded programming has 4 major categories:
 
 Responsiveness. Multithreading an interactive application may allow a program to continue running
