@@ -12,8 +12,8 @@
 
 SRC = main.c utils.c
 OBJ = $(SRC:.c=.o)
-CC = gcc
-FLAGS = -pthread -Wall -Werror -Wextra -g
+CC = gcc -g
+FLAGS = -pthread -Wall -Werror -Wextra
 NAME = philo
 
 .o: .c
