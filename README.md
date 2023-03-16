@@ -22,17 +22,24 @@ data section and other operating-system resources such as open files and signals
 A traditional/heavyweight process has a SINGLE THREAD of control.
 If process has MULTIPLE THREADS of control, it can perform more than a task at a time.
 
-		    SINGLE-THREADED PROCESS									                   	MULTI-THREADED PROCESS
-
-|-----------------------------------|                      |--------------------------------------|
-|    code	  |	   data	   |	 files	|					             |	  code	  |	   data	    |	  files   |
-|-----------------------------------|					             |--------------------------------------|
-|    registers	   |		 stack		  |					             | registers	|  registers  | registers |
-|-----------------------------------|					             |--------------------------------------|
-|			         thread		  				  |                      |   stack	  |	   stack	  |	  stack   |
-|-----------------------------------|                      |--------------------------------------|
-														                               |  thread	  |   thread	  |	  thread  |
-														                               |--------------------------------------|
+<table>
+  <tr>
+  <th>SINGLE THREAD</th>
+  </tr>
+  <tr>
+    <th>code</th>
+    <th>data</th>
+    <th>files</th>
+  </tr>
+  <tr>
+    <td>registers</td>
+    <td>stack</td>
+    <td>Germany</td>
+  </tr>
+  <tr>
+    <td>thread</td>
+  </tr>
+</table>
 
 Benefits of multithreaded programming has 4 major categories:
 
