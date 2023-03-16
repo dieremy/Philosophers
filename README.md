@@ -24,7 +24,7 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
 
 <table>
   <tr>
-  <th> colspan='3'SINGLE THREAD</th>
+  <th colspan='3'>SINGLE THREAD</th>
   </tr>
   <tr>
     <th>code</th>
