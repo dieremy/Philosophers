@@ -33,16 +33,16 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
   </tr>
   <tr>
     <td>registers</td>
-    <td>stack</td>
+    <td colspan='2'> stack</td>
   </tr>
   <tr>
-    <td>thread</td>
+    <td colspan='3'>	thread</td>
   </tr>
 </table>
 
 <table>
   <tr>
-  <th>MULTI-THREADED PROCESS</th>
+  <th colspan='3'>MULTI-THREADED PROCESS</th>
   </tr>
   <tr>
     <th>code</th>
