@@ -36,7 +36,7 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
     <td style="text-align:center" colspan='2'>stack</td>
   </tr>
   <tr>
-    <td style="text-align:center" && colspan='3'>thread</td>
+    <td style="text-align:center">thread</td>
   </tr>
 </table>
 <table>
