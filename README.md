@@ -24,14 +24,16 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      td {
-        text-align: center;
-        vertical-align: middle;
+<head>
+   <style>
+      table, td, th {
+         border: 1px solid black;
+         width: 300px;
+	 style="text-align:center";
       }
-    </style>
-  </head>
+   </style>
+</head>
+<body>
 <table>
   <tr>
   <th colspan='3'>SINGLE THREAD</th>
@@ -74,6 +76,8 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
     <td>thread</td>
   </tr>
 </table>
+</body>
+</html>
 
 Benefits of multithreaded programming has 4 major categories:
 
