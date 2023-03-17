@@ -18,6 +18,13 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+enum fd_handle
+{
+    in,
+    out,
+    err,
+};
+
 enum e_bool
 {
     false,
@@ -26,22 +33,27 @@ enum e_bool
 
 typedef struct  s_philos
 {
-    int num_philo;
-    int time_to_die;
-    int time_to_eat;
-    int time_to_sleep;
-    int eat_times;
+    int				num_philo;
+    int				time_to_die;
+    int				time_to_eat;
+    int				time_to_sleep;
+    int				eat_times;
+    struct s_philos	*next;
+    struct s_philos	*prev;
 }              t_philos;
 
-typedef struct  s_data
+typedef struct  s_tab
 {
-    int			num_philo;
-    int			time_to_die;
-    int			time_to_eat;
-    int			time_to_sleep;
-    int			eat_times;
-    t_philos	*table;
-}               t_data;
+    int				num_philo;
+    int				time_to_die;
+    int				time_to_eat;
+    int				time_to_sleep;
+    int				eat_times;
+    int				meal_cnt;
+    pthread_mutex_t	*forks;
+	struct timeval	start;
+    t_philos		*philos;
+}               t_tab;
 
 int ft_atoi(char *str);
 

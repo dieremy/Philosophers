@@ -12,10 +12,10 @@
 
 #include "philo.h"
 
-void	print_error()
+int	print_error()
 {
-	write(2, "Error\n", 6);
-	exit(0);
+	write(err, "Error\n", 6);
+	exit(1);
 }
 
 int	ft_isdigit(char c)
