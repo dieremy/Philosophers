@@ -5,8 +5,8 @@ You will see how to create threads and you will discover mutexes.
 
 # - Forks -
 
-Fork system call is used to create a new process, which is called <b>child process</b>,
-which runs concurrently with the process that makes the fork() call <b>parent process</b>.
+Fork system call is used to create a new process, which is called <i>child process</i>,
+which runs concurrently with the process that makes the fork() call <i>parent process</i>.
 After been created the child one, both processes will execute the next instruction
 following fork() call. Both processes use same program counter, CPU registers, same open files.
 
@@ -16,8 +16,8 @@ fork() takes no parameter and returns integer:
 - positive value -> returned to parent or caller.
 <pre>
 <code>
-#include <stdio.h>
-#include <sys/types.h>
+#include <<stdio.h>>
+#include <<sys/types.h>>
 
 int main()
 {
