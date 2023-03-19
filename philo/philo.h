@@ -17,6 +17,7 @@
 # include <pthread.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <sys/time.h>
 
 enum fd_handle
 {
@@ -33,13 +34,17 @@ enum e_bool
 
 typedef struct  s_philos
 {
+    int             id;
     int				num_philo;
     int				time_to_die;
     int				time_to_eat;
     int				time_to_sleep;
     int				eat_times;
+	int				last_meal;
+	pthread_mutex_t	fork;
     struct s_philos	*next;
     struct s_philos	*prev;
+	struct s_tab	*tab;
 }              t_philos;
 
 typedef struct  s_tab
@@ -50,11 +55,15 @@ typedef struct  s_tab
     int				time_to_sleep;
     int				eat_times;
     int				meal_cnt;
-    pthread_mutex_t	*forks;
-	struct timeval	start;
-    t_philos		*philos;
+    int             dead;
+    int             full;
+    pthread_mutex_t	post;
+	pthread_mutex_t	check;
+	int				start;
+    t_philos		*philo;
 }               t_tab;
 
-int ft_atoi(char *str);
+int 	ft_atoi(char *str);
+size_t	get_time(void);
 
 #endif

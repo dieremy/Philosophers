@@ -12,6 +12,14 @@
 
 #include "philo.h"
 
+size_t	get_time(void)
+{
+	struct timeval	t;
+
+	gettimeofday(&t, NULL);
+	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
+}
+
 int	print_error()
 {
 	write(err, "Error\n", 6);
@@ -27,22 +35,26 @@ int	ft_atoi(char *str)
 {
 	int	r;
 	int	s;
+	int	i;
 
 	r = 0;
 	s = 1;
-	while (*str == 32 || (*str >= 9 && *str <= 13))
-		str++;
-	if (*str == '+' || *str == '-')
+	i = 0;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
 	{
-		if (*str == '-')
-			s *= -1;
-		str++;
-	}
-	while (*str)
-	{
-		if (!ft_isdigit(*str))
+		if (!ft_isdigit(str[i + 1]))
 			print_error();
-		r = r * 10 + (*str++) - 48;
+		if (str[i] == '-')
+			s *= -1;
+		i++;
+	}
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			print_error();
+		r = r * 10 + (str[i++]) - 48;
 	}
 	return (s * r);
 }
