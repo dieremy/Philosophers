@@ -3,6 +3,43 @@
 In this project you will learn the basics of threading a process.
 You will see how to create threads and you will discover mutexes.
 
+# - Forks -
+
+Fork system call is used to create a new process, which is called <b>child process</b>,
+which runs concurrently with the process that makes the fork() call <b>parent process</b>.
+After been created the child one, both processes will execute the next instruction
+following fork() call. Both processes use same program counter, CPU registers, same open files.
+
+fork() takes no parameter and returns integer:
+- negative value -> unsuccessfull creation of child process;
+- zero -> successfull cration of child process;
+- positive value -> returned to parent or caller.
+<pre>
+<code>
+#include <stdio.h>
+#include <sys/types.h>
+
+int main()
+{
+	fork();
+	fork();
+	fork();
+	printf("hello world\n");
+	return 0;
+}
+
+OUTPUT:
+hello world				The number of times "hello world\n" is printed
+hello world				is equal to number of processes crated.
+hello world				NUM of processes = 2^n, where n is the number of 
+hello world				fork system calls. In this case n = 3,
+hello world				2^3 = 8.
+hello world
+hello world
+hello world
+</code>
+</pre>
+
 # - Threads -
 
 A program under execution is known as process an a thread is a basic unit of
