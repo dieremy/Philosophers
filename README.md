@@ -65,6 +65,14 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
   </tr>
 </table>
 
+<pre>
+<code>
+
+hello
+
+</code>
+</pre>
+
 Benefits of multithreaded programming has 4 major categories:
 
 Responsiveness. Multithreading an interactive application may allow a program to continue running
@@ -79,3 +87,10 @@ Cause threads share resources of the process where they belong, it's more econom
 Utilization of multiprocessor architecture. Benefits of multithreading can be greatly increased in a multiprocessor architecture,
 where threads may be running in parallel on different processors.
 A single-threaded process can only run on one CPU, no matter how many are available. Multithreading on a multi-CPU machine increases concurrency.
+
+# - Mutex -
+
+A mutex is a MUTually EXclusive flag. Acts as a gate keeper to a section of code
+allowing one thread in and blocking access to all others.
+This ensures that the code being controlled will only be hit by a single thread at a time.
+Always remember to destroy the mutex when everything is done.
