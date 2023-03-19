@@ -16,8 +16,8 @@ fork() takes no parameter and returns integer:
 - positive value -> returned to parent or caller.
 <pre>
 <code>
-#include <><stdio.h><>
-#include <<sys/types.h>>
+#include <stdio.h>
+#include <sys/types.h>
 
 int main()
 {
