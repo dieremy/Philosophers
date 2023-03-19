@@ -29,11 +29,12 @@ int main()
 }
 
 OUTPUT:
-hello world				The number of times "hello world\n" is printed
-hello world				is equal to number of processes crated.
-hello world				NUM of processes = 2^n, where n is the number of 
-hello world				fork system calls. In this case n = 3,
-hello world				2^3 = 8.
+
+hello world		The number of times "hello world\n" is printed
+hello world		is equal to number of processes crated.
+hello world		NUM of processes = 2^n, where n is the number of 
+hello world		fork system calls. In this case n = 3,
+hello world		2^3 = 8.
 hello world
 hello world
 hello world
