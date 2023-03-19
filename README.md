@@ -68,7 +68,18 @@ If process has MULTIPLE THREADS of control, it can perform more than a task at a
 <pre>
 <code>
 
-hello
+----------------------------		------------------------------------------
+|      SINGLE THREAD	   |		|         MULTI-THREADED PROCESS         |
+----------------------------		------------------------------------------
+|  code	|  data	 |  files  |		|     code     |    data     |	 files   |
+----------------------------		------------------------------------------
+|  registers  |   stack	   |	        |   registers  |  registers  | registers |
+----------------------------		------------------------------------------
+|	   thread	   |		|     stack    |    stack    |	 stack   |
+----------------------------		------------------------------------------
+					|     thread   |   thread    |   thread  |
+					------------------------------------------
+
 
 </code>
 </pre>
