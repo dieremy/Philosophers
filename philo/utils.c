@@ -33,28 +33,28 @@ int	ft_isdigit(char c)
 
 int	ft_atoi(char *str)
 {
-	int	r;
-	int	s;
-	int	i;
+	long int	r;
+	int			i;
 
 	r = 0;
-	s = 1;
 	i = 0;
 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
 		i++;
-	if (str[i] == '+' || str[i] == '-')
+	if (str[i] == '+')
 	{
 		if (!ft_isdigit(str[i + 1]))
 			print_error();
-		if (str[i] == '-')
-			s *= -1;
 		i++;
 	}
+	if (str[i] == '-')
+		print_error();
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
 			print_error();
 		r = r * 10 + (str[i++]) - 48;
 	}
-	return (s * r);
+	if (r > 2147483647)
+		print_error();
+	return (r);
 }

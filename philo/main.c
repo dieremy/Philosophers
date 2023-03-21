@@ -12,29 +12,46 @@
 
 #include "philo.h"
 
-void	init(t_tab *t)
+void	set_table(t_tab *t)
 {
 	int	i;
 
 	i = 0;
-	t->philo = malloc(sizeof(t_philos) * t->num_philo);
 	while (i < t->num_philo)
 	{
-		t->philo[i].id = i + 1;
 		t->philo[i].tab = t;
-		if (i + 1 == t->num_philo)
-			t->philo[i].next = &t->philo[0];
-		else
-			t->philo[i].next = &t->philo[i + 1];
-		if (i == 0)
-			t->philo[i].prev = &t->philo[t->num_philo - 1];
-		else
-			t->philo[i].prev = &t->philo[i - 1];
-		pthread_mutex_init(&t->philo[i].fork, NULL);
+		t->philo[i].id = i + 1;
+		t->philo[i].time_to_die = t->time_to_die;
+		t->philo[i].eat_times = 0;
+		t->philo[i].eating = 0;
+		t->philo[i].state = 0;
+		pthread_mutex_init(&t->philo[i].check, NULL);
 		i++;
 	}
-	// pthreads_mutex_init(&t->post, NULL);
-	// pthreads_mutex_init(&t->post, NULL);
+}
+
+int	init(t_tab *t)
+{
+	int	i;
+
+	t->tid = malloc(sizeof(pthread_t) * t->num_philo);
+	t->forks = malloc(sizeof(pthread_mutex_t) * t->num_philo);
+	t->philo = malloc(sizeof(t_philos) * t->num_philo);
+	i = -1;
+	while (++i < t->num_philo)
+		pthread_mutex_init(&t->forks[i], NULL);
+	i = 0;
+	t->philo[0].fork_l = &t->forks[0];
+	t->philo[0].fork_r = &t->forks[t->num_philo - 1];
+	i = 1;
+	while (i < t->num_philo)
+	{
+		t->philo[i].fork_l = &t->forks[i];
+		t->philo[i].fork_r = &t->forks[i - 1];
+		i++;
+	}
+	set_table(t);
+	return (0);
 }	
 
 int	check_params(t_tab *t, int ac, char *av[])
@@ -48,7 +65,10 @@ int	check_params(t_tab *t, int ac, char *av[])
 	t->full = 0;
 	if (ac == 6)
 		t->meal_cnt = ft_atoi(av[5]);
-	init(t);
+	pthread_mutex_init(&t->post, NULL);
+	pthread_mutex_init(&t->check, NULL);
+	if (init(t))
+		return (1);
 	return (0);
 }
 
@@ -76,7 +96,7 @@ void	run(t_tab *t, pthread_t *th)
 	int	i;
 
 	pthread_mutex_init(&t->post, NULL);
-	pthread_mutex_init(&t->post, NULL);
+	pthread_mutex_init(&t->check, NULL);
 	i = 0;
 	while (i < t->num_philo)
 	{
@@ -90,13 +110,55 @@ void	run(t_tab *t, pthread_t *th)
 		pthread_mutex_unlock(&t->post);
 		i++;
 	}
+	//verifier la mort
+	//la sortie
+}
 
+void	start_th(t_tab *t)
+{
+	pthread_t	th0;
+	int			i;
+
+	i = -1;
+	t->start = get_time();
+	// if (t->meal_cnt > 0)
+	// 	pthread_create(&th0, NULL, &monitor, &t->philo[0]);
+	while (++i < t->num_philo)
+	{
+		// pthread_create(&t->tid[i], NULL, &routine, &t->philo[i]);
+		// usleep(1);
+	}
+	i = -1;
+	while (++i < t->num_philo)
+		pthread_join(t->tid[i], NULL);
+}
+
+void	ft_esc(t_tab *t)
+{
+	int	i;
+
+	i = 0;
+	while (i < t->num_philo)
+	{
+		pthread_mutex_destroy(&t->forks[i]);
+		pthread_mutex_destroy(&t->philo[i].check);
+		i++;
+	}
+	pthread_mutex_destroy(&t->post);
+	pthread_mutex_destroy(&t->check);
+	if (t->tid)
+		free(t->tid);
+	if (t->forks)
+		free(t->forks);
+	if (t->philo)
+		free(t->philo);
+	free(t);
 }
 
 int	main(int ac, char **av)
 {
-	t_tab		*params;
-	pthread_t	*th;
+	t_tab		*data;
+	pthread_t	th0;
 	
 	if (ac < 5 || ac > 6 || ft_atoi(av[1]) < 1 || ft_atoi(av[1]) > 200)
 	{
@@ -106,22 +168,26 @@ int	main(int ac, char **av)
 	}
 	else
 	{
-		params = (t_tab *)malloc(sizeof(t_tab));
-		if (!params)
-			return (-1);
-		check_params(params, ac, av);
-		// pthreads_mutex_init(&params->post, NULL);
-		// pthreads_mutex_init(&params->post, NULL);
-		th = (pthread_t *)malloc(sizeof(pthread_t) * params->num_philo);
-		params->start = get_time();
-		run(params, th);
-		// printf("philo num %d\n", params->num_philo);
-		// printf("TTD %d\n", params->time_to_die);
-		// printf("TTE %d\n", params->time_to_eat);
-		// printf("TTS %d\n", params->time_to_sleep);
-		// if (ac == 6)
-		// 	printf("meal cnt %d\n", params->meal_cnt);
-		free(params);
+		data = (t_tab *)malloc(sizeof(t_tab));
+		// if (!data)
+			// return (-1);
+		if (check_params(data, ac, av))
+			return (1);
+		// start_th(&data);
+		ft_esc(data);
+		//CASE ONE FILO
+
+		// pthreads_mutex_init(&data->post, NULL);
+		// pthreads_mutex_init(&data->post, NULL);
+		// th = (pthread_t *)malloc(sizeof(pthread_t) * data->num_philo);
+		// run(data, th);
+		printf("philo num %d\n", data->num_philo);
+		printf("TTD %d\n", data->time_to_die);
+		printf("TTE %d\n", data->time_to_eat);
+		printf("TTS %d\n", data->time_to_sleep);
+		if (ac == 6)
+			printf("meal cnt %d\n", data->meal_cnt);
+		// free(params);
 	}	
     return (0);
 }

@@ -34,21 +34,27 @@ enum e_bool
 
 typedef struct  s_philos
 {
+    pthread_t       th; 
     int             id;
-    int				num_philo;
     int				time_to_die;
-    int				time_to_eat;
-    int				time_to_sleep;
     int				eat_times;
+    int				state;
+	int				eating;  
 	int				last_meal;
-	pthread_mutex_t	fork;
-    struct s_philos	*next;
-    struct s_philos	*prev;
+	pthread_mutex_t	check;
+	pthread_mutex_t	*fork_r;
+	pthread_mutex_t	*fork_l;
 	struct s_tab	*tab;
+    // int				time_to_eat;
+    // int				time_to_sleep;
+    // int				num_philo;
+    // struct s_philos	*next;
+    // struct s_philos	*prev;
 }              t_philos;
 
 typedef struct  s_tab
 {
+	pthread_t		*tid;
     int				num_philo;
     int				time_to_die;
     int				time_to_eat;
@@ -57,6 +63,7 @@ typedef struct  s_tab
     int				meal_cnt;
     int             dead;
     int             full;
+	pthread_mutex_t	*forks;
     pthread_mutex_t	post;
 	pthread_mutex_t	check;
 	int				start;
