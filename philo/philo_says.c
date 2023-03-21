@@ -2,7 +2,7 @@
 
 void	messages(int str, t_philos *philo)
 {
-	int	time;
+	long long unsigned	time;
 
 	pthread_mutex_lock(&philo->tab->post);
 	time = get_time() - philo->tab->start;
