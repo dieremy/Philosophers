@@ -19,7 +19,7 @@
 # include <stdlib.h>
 # include <sys/time.h>
 
-enum fd_handle
+enum e_fd
 {
     in,
     out,
