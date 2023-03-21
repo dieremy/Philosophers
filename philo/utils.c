@@ -20,9 +20,15 @@ size_t	get_time(void)
 	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
 
-int	print_error()
+int	print_error(int str)
 {
-	write(err, "Error\n", 6);
+	if (str == NB_INPUT)
+	{
+		write(err, "usage: ./philo [number_of_philosophers] ", 40);
+		write(err, "[time_to_die] [time_to_eat] [time_to_sleep]\n", 44);
+	}
+	if (str == WRG_INPUT)
+		write(err, "WRONG INPUT VALUE\n", 19);
 	exit(1);
 }
 
@@ -40,21 +46,21 @@ int	ft_atoi(char *str)
 	i = 0;
 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
 		i++;
+	if (str[i] == '-')
+		print_error(WRG_INPUT);
 	if (str[i] == '+')
 	{
 		if (!ft_isdigit(str[i + 1]))
-			print_error();
+			print_error(WRG_INPUT);
 		i++;
 	}
-	if (str[i] == '-')
-		print_error();
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
-			print_error();
+			print_error(WRG_INPUT);
 		r = r * 10 + (str[i++]) - 48;
 	}
 	if (r > 2147483647)
-		print_error();
+		print_error(WRG_INPUT);
 	return (r);
 }

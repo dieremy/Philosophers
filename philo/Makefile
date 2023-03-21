@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRC = main.c utils.c
+SRC = start.c main.c utils.c philo_says.c
 OBJ = $(SRC:.c=.o)
 CC = gcc -g
 FLAGS = -pthread -Wall -Werror -Wextra

@@ -26,51 +26,66 @@ enum fd_handle
     err,
 };
 
-enum e_bool
+enum e_state
 {
-    false,
-    true,
+    TAKE_FORKS,
+    THINKING,
+    SLEEPING,
+    EATING,
+    DEAD,
+};
+
+enum e_error
+{
+	WRG_INPUT,
+	NB_INPUT,
 };
 
 typedef struct  s_philos
 {
-    pthread_t       th; 
     int             id;
-    int				time_to_die;
     int				eat_times;
     int				state;
 	int				eating;  
 	int				last_meal;
+    pthread_t       th; 
+    unsigned long	time_to_die;
 	pthread_mutex_t	check;
 	pthread_mutex_t	*fork_r;
 	pthread_mutex_t	*fork_l;
 	struct s_tab	*tab;
-    // int				time_to_eat;
-    // int				time_to_sleep;
-    // int				num_philo;
-    // struct s_philos	*next;
-    // struct s_philos	*prev;
 }              t_philos;
 
 typedef struct  s_tab
 {
-	pthread_t		*tid;
     int				num_philo;
-    int				time_to_die;
-    int				time_to_eat;
-    int				time_to_sleep;
     int				eat_times;
     int				meal_cnt;
     int             dead;
     int             full;
+	pthread_t		*tid;
+	unsigned long	start;
+    unsigned long	time_to_eat;
+    unsigned long	time_to_sleep;
+    unsigned long	time_to_die;
 	pthread_mutex_t	*forks;
     pthread_mutex_t	post;
 	pthread_mutex_t	check;
-	int				start;
     t_philos		*philo;
 }               t_tab;
 
 int 	ft_atoi(char *str);
+int		start_th(t_tab *t);
+int		case_one(t_tab *t);
+int		print_error(int str);
+void	messages(int str, t_philos *philo);
+void	take_forks(t_philos *philo);
+void	drop_forks(t_philos *philo);
+void	*supervisor(void *data);
+void	*routine(void * data);
+void	*monitor(void *data);
+void	eat(t_philos *philo);
+void	ft_esc(t_tab *t);
 size_t	get_time(void);
 
 #endif

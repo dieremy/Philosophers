@@ -12,6 +12,28 @@
 
 #include "philo.h"
 
+void	ft_esc(t_tab *t)
+{
+	int	i;
+
+	i = 0;
+	while (i < t->num_philo)
+	{
+		pthread_mutex_destroy(&t->forks[i]);
+		pthread_mutex_destroy(&t->philo[i].check);
+		i++;
+	}
+	pthread_mutex_destroy(&t->post);
+	pthread_mutex_destroy(&t->check);
+	if (t->tid)
+		free(t->tid);
+	if (t->forks)
+		free(t->forks);
+	if (t->philo)
+		free(t->philo);
+	free(t);
+}
+
 void	set_table(t_tab *t)
 {
 	int	i;
@@ -65,6 +87,7 @@ int	check_params(t_tab *t, int ac, char *av[])
 	t->full = 0;
 	if (ac == 6)
 		t->meal_cnt = ft_atoi(av[5]);
+	write(out, "TIME\tPHILO\tACTION\n\n", 19);
 	pthread_mutex_init(&t->post, NULL);
 	pthread_mutex_init(&t->check, NULL);
 	if (init(t))
@@ -72,122 +95,23 @@ int	check_params(t_tab *t, int ac, char *av[])
 	return (0);
 }
 
-void	*cicle(void *data)
-{
-	t_philos	*philo;
-	t_tab		*t;
-
-	philo = (t_philos *)data;
-	t = philo->tab;
-	if (philo->id % 2 == 0)
-		usleep(1000);
-	while (!t->dead && !t->full)
-	{
-		// eat();
-		// mess()
-		// during();
-		// mess();
-	}
-	return (NULL);
-}
-
-void	run(t_tab *t, pthread_t *th)
-{
-	int	i;
-
-	pthread_mutex_init(&t->post, NULL);
-	pthread_mutex_init(&t->check, NULL);
-	i = 0;
-	while (i < t->num_philo)
-	{
-		if (pthread_create(&th[i], NULL, &cicle, &t->philo[i]))
-		{
-			free(t->philo);
-			free(th);
-		}
-		pthread_mutex_lock(&t->post);
-		t->philo[i].last_meal = t->start;
-		pthread_mutex_unlock(&t->post);
-		i++;
-	}
-	//verifier la mort
-	//la sortie
-}
-
-void	start_th(t_tab *t)
-{
-	pthread_t	th0;
-	int			i;
-
-	i = -1;
-	t->start = get_time();
-	// if (t->meal_cnt > 0)
-	// 	pthread_create(&th0, NULL, &monitor, &t->philo[0]);
-	while (++i < t->num_philo)
-	{
-		// pthread_create(&t->tid[i], NULL, &routine, &t->philo[i]);
-		// usleep(1);
-	}
-	i = -1;
-	while (++i < t->num_philo)
-		pthread_join(t->tid[i], NULL);
-}
-
-void	ft_esc(t_tab *t)
-{
-	int	i;
-
-	i = 0;
-	while (i < t->num_philo)
-	{
-		pthread_mutex_destroy(&t->forks[i]);
-		pthread_mutex_destroy(&t->philo[i].check);
-		i++;
-	}
-	pthread_mutex_destroy(&t->post);
-	pthread_mutex_destroy(&t->check);
-	if (t->tid)
-		free(t->tid);
-	if (t->forks)
-		free(t->forks);
-	if (t->philo)
-		free(t->philo);
-	free(t);
-}
-
 int	main(int ac, char **av)
 {
 	t_tab		*data;
-	pthread_t	th0;
 	
-	if (ac < 5 || ac > 6 || ft_atoi(av[1]) < 1 || ft_atoi(av[1]) > 200)
-	{
-		write(err, "usage: ./philo [number_of_philosophers] ", 40);
-		write(err, "[time_to_die] [time_to_eat] [time_to_sleep]\n", 44);
-		return (1);
-	}
+	if (ac < 5 || ac > 6)
+		print_error(NB_INPUT);
+	if (ft_atoi(av[1]) < 1 || ft_atoi(av[1]) > 200)
+		print_error(WRG_INPUT);
 	else
 	{
 		data = (t_tab *)malloc(sizeof(t_tab));
-		// if (!data)
-			// return (-1);
 		if (check_params(data, ac, av))
 			return (1);
-		// start_th(&data);
-		ft_esc(data);
-		//CASE ONE FILO
-
-		// pthreads_mutex_init(&data->post, NULL);
-		// pthreads_mutex_init(&data->post, NULL);
-		// th = (pthread_t *)malloc(sizeof(pthread_t) * data->num_philo);
-		// run(data, th);
-		printf("philo num %d\n", data->num_philo);
-		printf("TTD %d\n", data->time_to_die);
-		printf("TTE %d\n", data->time_to_eat);
-		printf("TTS %d\n", data->time_to_sleep);
-		if (ac == 6)
-			printf("meal cnt %d\n", data->meal_cnt);
-		// free(params);
+		if (start_th(data))
+			return (1);
+		if (data->num_philo > 1)
+			ft_esc(data);
 	}	
     return (0);
 }
