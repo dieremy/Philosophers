@@ -24,11 +24,15 @@ int	print_error(int str)
 {
 	if (str == NB_INPUT)
 	{
-		write(err, "usage: ./philo [number_of_philosophers] ", 40);
-		write(err, "[time_to_die] [time_to_eat] [time_to_sleep]\n", 44);
+		write(err, "\e[0;31mUSAGE: ./philo number_of_philosophers ", 46);
+		write(err, "time_to_die time_to_eat time_to_sleep ", 38);
+		write(err, "[number_of_times_each_philosopher_must_eat]\n\e[0m", 49);
 	}
 	if (str == WRG_INPUT)
-		write(err, "WRONG INPUT VALUE\n", 19);
+	{
+		write(err, "\e[0;31mWRONG INPUT: Philos must make an action ", 48);
+		write(err, "at least for 1ms and eat at least 1 time.\n\e[0m", 47);
+	}		
 	exit(1);
 }
 
