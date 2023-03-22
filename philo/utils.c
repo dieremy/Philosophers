@@ -12,12 +12,12 @@
 
 #include "philo.h"
 
-size_t	get_time(void)
+size_t	get_time(struct timeval v)
 {
 	struct timeval	t;
 
 	gettimeofday(&t, NULL);
-	return ((t.tv_sec * 1000) + (t.tv_usec / 1000));
+	return ((t.tv_sec * 1000) + (t.tv_usec / 1000) - (v.tv_sec * 1000) + (v.tv_usec / 1000));
 }
 
 int	print_error(int str)

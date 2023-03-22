@@ -43,39 +43,43 @@ enum e_error
 
 typedef struct  s_philos
 {
+	struct s_tab	*tab;
+    pthread_t       th; 
     int             id;
     int				eat_times;
     int				state;
-	int				eating;  
-	int				last_meal;
-    pthread_t       th; 
-    unsigned long	time_to_die;
-	pthread_mutex_t	check;
+    int				prev_state;
+	struct timeval	start_sleep;
+	struct timeval	start_eat;
 	pthread_mutex_t	*fork_r;
 	pthread_mutex_t	*fork_l;
-	struct s_tab	*tab;
+	// int				eating;  
+	// int				last_meal;
+    // unsigned long	time_to_die;
+	// pthread_mutex_t	check;
 }              t_philos;
 
 typedef struct  s_tab
 {
+	pthread_t		*tid;
     int				num_philo;
-    int				eat_times;
     int				meal_cnt;
     int             dead;
     int             full;
-	pthread_t		*tid;
-	unsigned long	start;
+	int				checker;
+    t_philos		*philo;
+    unsigned long	time_to_die;
     unsigned long	time_to_eat;
     unsigned long	time_to_sleep;
-    unsigned long	time_to_die;
+	struct timeval	start;
 	pthread_mutex_t	*forks;
-    pthread_mutex_t	post;
-	pthread_mutex_t	check;
-    t_philos		*philo;
+    // int				eat_times;
+    // pthread_mutex_t	post;
+	// pthread_mutex_t	check;
 }               t_tab;
 
 int 	ft_atoi(char *str);
-int		start_th(t_tab *t);
+int	print_state(t_philos *philo, int i);
 int		case_one(t_tab *t);
 int		print_error(int str);
 void	messages(int str, t_philos *philo);
@@ -86,6 +90,6 @@ void	*has_eaten(void *data);
 void	*check_p(void *data);
 void	eat(t_philos *philo);
 void	ft_esc(t_tab *t);
-size_t	get_time(void);
+unsigned long	get_time(struct timeval v);
 
 #endif
