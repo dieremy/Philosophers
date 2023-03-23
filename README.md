@@ -97,3 +97,25 @@ A mutex is a MUTually EXclusive flag. Acts as a gate keeper to a section of code
 allowing one thread in and blocking access to all others.
 This ensures that the code being controlled will only be hit by a single thread at a time.
 Always remember to destroy the mutex when everything is done.
+
+# - Semaphores -
+
+Semaphores are very useful in process synchronization and multithreading.
+Must include <semaphore.h> and compile the code with -lpthread -lrt.
+
+To lock a semaphore or wait we can use the sem_wait function -> <i>int sem_wait(sem_t *sem);</i>
+
+To release or signal a semaphore we can use the sem_post function -> <i>int sem_post(sem_t *sem);</i>
+
+A semaphore is initialized
+by using sem_open() for IPC
+by using the sem_init function for process and threads
+-> <i>int sem_init(sem_t *sem, int pshared, unsigned int value);</i>
+- sem = semaphore to be initialized
+- pshared = this argument specifies if initialized sem is shared between processes or threads
+  non-zero value = sem shared btw processes
+  zero value = sem shared btw threads
+- value = value to assign to new initialized semaphore
+
+To destroy a semaphore we can use sem_destroy function -> <i>int sem_destroy(sem_t *sem);</i>
+
