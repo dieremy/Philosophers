@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-size_t	get_time(struct timeval v)
+unsigned long	get_time(struct timeval v)
 {
 	struct timeval	t;
 
