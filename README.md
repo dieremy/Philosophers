@@ -113,8 +113,8 @@ by using the sem_init function for process and threads
 -> <i>int sem_init(sem_t *sem, int pshared, unsigned int value);</i>
 - sem = semaphore to be initialized
 - pshared = this argument specifies if initialized sem is shared between processes or threads
-	non-zero value = sem shared btw processes
-	zero value = sem shared btw threads
+-> non-zero value = sem shared btw processes
+-> zero value = sem shared btw threads
 - value = value to assign to new initialized semaphore
 
 To destroy a semaphore we can use sem_destroy function -> <i>int sem_destroy(sem_t *sem);</i>
