@@ -12,12 +12,13 @@
 
 #include "philo.h"
 
-unsigned long	get_time(struct timeval v)
+unsigned long	gap_time(struct timeval v)
 {
 	struct timeval	t;
 
 	gettimeofday(&t, NULL);
-	return ((t.tv_sec * 1000) + (t.tv_usec / 1000) - (v.tv_sec * 1000) + (v.tv_usec / 1000));
+	return (((t.tv_sec * 1000) + (t.tv_usec / 1000))
+		- ((v.tv_sec * 1000) + (v.tv_usec / 1000)));
 }
 
 int	print_error(int str)
@@ -32,7 +33,7 @@ int	print_error(int str)
 	{
 		write(err, "\e[0;31mWRONG INPUT: Philos must make an action ", 48);
 		write(err, "at least for 1ms and eat at least 1 time.\n\e[0m", 47);
-	}		
+	}
 	exit(1);
 }
 

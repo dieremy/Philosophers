@@ -26,13 +26,24 @@ enum e_fd
     err,
 };
 
+// enum e_state
+// {
+//     SLEEPING = 0,
+//     TAKE_FORKS = 1,
+//     EATING = 2,
+//     DEAD = 4,
+//     THINKING = 5,
+//     FULL = 10,
+// };
+
 enum e_state
 {
-    TAKE_FORKS,
-    THINKING,
-    SLEEPING,
-    EATING,
-    DEAD,
+    SLEEPING = 0,
+    TAKE_FORKS = 1,
+    EATING = 2,
+    DEAD = 3,
+    THINKING = 4,
+    FULL = 5,
 };
 
 enum e_error
@@ -43,12 +54,12 @@ enum e_error
 
 typedef struct  s_philos
 {
-	struct s_tab	*tab;
-    pthread_t       th; 
     int             id;
     int				eat_times;
     int				state;
     int				prev_state;
+    pthread_t       th; 
+	struct s_tab	*tab;
 	struct timeval	start_sleep;
 	struct timeval	start_eat;
 	pthread_mutex_t	*fork_r;
@@ -61,35 +72,34 @@ typedef struct  s_philos
 
 typedef struct  s_tab
 {
-	pthread_t		*tid;
     int				num_philo;
     int				meal_cnt;
-    int             dead;
     int             full;
-	int				checker;
     t_philos		*philo;
     unsigned long	time_to_die;
     unsigned long	time_to_eat;
     unsigned long	time_to_sleep;
 	struct timeval	start;
 	pthread_mutex_t	*forks;
+    // int             dead;
+	// int				checker;
+	// pthread_t		*tid;
     // int				eat_times;
     // pthread_mutex_t	post;
 	// pthread_mutex_t	check;
 }               t_tab;
 
-int 	ft_atoi(char *str);
-int	print_state(t_philos *philo, int i);
-int		case_one(t_tab *t);
-int		print_error(int str);
-void	messages(int str, t_philos *philo);
-void	take_forks(t_philos *philo);
-void	drop_forks(t_philos *philo);
-void	*over_n_over(void * data);
-void	*has_eaten(void *data);
-void	*check_p(void *data);
-void	eat(t_philos *philo);
-void	ft_esc(t_tab *t);
-unsigned long	get_time(struct timeval v);
+unsigned long   gap_time(struct timeval v);
+void	        *check_p(void *data);
+int 	        ft_atoi(char *str);
+int	            send_state(t_philos *philo, int i);
+int		        print_error(int str);
+int             ft_esc(t_tab *t);
+// void	messages(int str, t_philos *philo);
+// void	take_forks(t_philos *philo);
+// void	drop_forks(t_philos *philo);
+// void	*over_n_over(void * data);
+// void	*has_eaten(void *data);
+// void	eat(t_philos *philo);
 
 #endif

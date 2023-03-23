@@ -14,7 +14,7 @@ BRIGHT_BLUE=\e[4;94m
 MAGENTA=\e[4;35m
 DEFAULT=\e[0m
 
-SRC = start.c main.c utils.c philo_says.c
+SRC = start.c main.c utils.c check_state.c
 OBJ = $(SRC:.c=.o)
 CC = gcc -g
 FLAGS = -pthread -Wall -Werror -Wextra

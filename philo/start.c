@@ -1,38 +1,41 @@
 #include "philo.h"
 
-void	sleeping(t_philos *philo)
+int	wake(t_philos *philo)
 {//status zero
-	if (get_time(philo->start_sleep) >= philo->tab->time_to_sleep)
+	if (gap_time(philo->start_sleep) >= philo->tab->time_to_sleep)
 	{
-		philo->prev_state = 0; //0 //sleeping
-		philo->state = 5; //5 //thinking
-		return ;
+		philo->prev_state = SLEEPING;
+		philo->state = THINKING;
+		return (0);
 	}
+	return (1);
 }
 
-void	thinking(t_philos *philo)
+int	take_fork(t_philos *philo)
 {//state 1
 	if (pthread_mutex_lock(philo->fork_l) == 0)
-		philo->state = 1; //1 //take forks
+		philo->state = TAKE_FORKS;
+	return (0);
 }
 
-void	take_forks(t_philos *philo)
-{ //status two
+int	start_eating(t_philos *philo)
+{
 	if (philo->tab->num_philo == 1)
-		philo->state = 4; //4 //dead
+		philo->state = DEAD;
 	else if (pthread_mutex_lock(philo->fork_r) == 0)
 	{
-		philo->state = 2; //2 eating
+		philo->state = EATING;
 		gettimeofday(&philo->start_eat, NULL);
-		return ;
+		return (0);
 	}
+	return (0);
 }
 
-void	eating(t_philos *philo)
+int	shut_your_mouth(t_philos *philo)
 { //status three
-	if (get_time(philo->start_eat) >= philo->tab->time_to_eat)
+	if (gap_time(philo->start_eat) >= philo->tab->time_to_eat)
 	{
-		philo->state = 0; //0 thinking
+		philo->state = SLEEPING;
 		pthread_mutex_unlock(philo->fork_l);
 		pthread_mutex_unlock(philo->fork_r);
 		if (philo->tab->meal_cnt > 0)
@@ -40,14 +43,15 @@ void	eating(t_philos *philo)
 			philo->eat_times++;
 			if (philo->eat_times == philo->tab->meal_cnt)
 			{
-				philo->state = 10;
+				philo->state = FULL;
 				philo->tab->full++;
-				return ;
+				return (0);
 			}
 		}
 		gettimeofday(&philo->start_sleep, NULL);
-		return ;
+		return (0);
 	}
+	return (1);
 }
 
 void	*check_p(void *data)
@@ -55,68 +59,21 @@ void	*check_p(void *data)
 	t_philos	*philo;
 
 	philo = (t_philos *)data;
-	while (!philo->tab->checker)
-		continue ;
-	if (philo->id % 2 == 0)
+	if (philo->id % 2)
 		usleep(1000);
 	while (1)
 	{
 		usleep(100);
-		if (philo->state == 0) //0 //sleeping
-			sleeping(philo); //status zero
-		else if (philo->state == 5) //5 //thinking
-			thinking(philo); //status 1
-		else if (philo->state == 1) //1 take fork
-			take_forks(philo); //status two
-		else if (philo->state == 2) //2 //eating
-			eating(philo); //status 3
-		else if (philo->state == 10)
+		if (philo->state == SLEEPING)
+			wake(philo); //status zero
+		else if (philo->state == THINKING)
+			take_fork(philo); //status 1
+		else if (philo->state == TAKE_FORKS)
+			start_eating(philo); //status two
+		else if (philo->state == EATING)
+			shut_your_mouth(philo); //status 3
+		else if (philo->state == FULL)
 			gettimeofday(&philo->start_sleep, NULL);
 	}
 	return (0);
-}
-
-int	print_state(t_philos *philo, int i)
-{
-	if (philo->tab->meal_cnt != 0
-		&& philo->tab->full == philo->tab->num_philo)	
-		return (0);	
-	if (get_time(philo[i].start_sleep) > philo[i].tab->time_to_die)
-		philo[i].state = 4; //4 //dead
-	if (philo[i].prev_state != philo[i].state)
-	{
-		if (philo[i].state == 0) //0 sleeping
-		{//status zero
-			printf("%lu\t%d\tIS SLEEPING\n", get_time(philo[i].tab->start),
-				philo[i].id);
-			philo[i].prev_state = 0; //0 sleeping
-		}
-		else if (philo[i].state == 5) //5 thinking
-		{//status five
-			printf("%lu\t%d\tIS THINKING\n", get_time(philo[i].tab->start),
-				philo[i].id);
-			philo[i].prev_state = 5; //5 thinking
-		}
-		else if (philo[i].state == 1) //1 take forks
-		{//status one
-			printf("%lu\t%d\tHAS TAKEN A FORK\n", get_time(philo[i].tab->start),
-				philo[i].id);
-			philo[i].prev_state = 1; //1 take forks
-		}
-		else if (philo[i].state == 2) //2 eating
-		{//status two
-			printf("%lu\t%d\tHAS TAKEN A FORK\n", get_time(philo[i].tab->start),
-				philo[i].id);
-			printf("%lu\t%d\tIS EATING\n", get_time(philo[i].tab->start),
-				philo[i].id);
-			philo[i].prev_state = 2; //2 eating
-		}
-		else if (philo[i].state == 4) //4 dead
-		{
-			printf("%lu\t%d\tDEAD AF\n", get_time(philo[i].tab->start),
-				philo[i].id);
-			return (0);
-		}
-	}
-	return (1);
 }
