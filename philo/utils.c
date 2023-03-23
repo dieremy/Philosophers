@@ -69,3 +69,23 @@ int	ft_atoi(char *str)
 		print_error(WRG_INPUT);
 	return (r);
 }
+
+int	ft_esc(t_tab *t)
+{
+	int	i;
+
+	i = 0;
+	while (i < t->num_philo)
+	{
+		pthread_mutex_destroy(&t->forks[i]);
+		pthread_mutex_destroy(t->philo[i].fork_l);
+		pthread_mutex_destroy(t->philo[i].fork_r);
+		i++;
+	}
+	if (t->forks)
+		free(t->forks);
+	if (t->philo)
+		free(t->philo);
+	free(t);
+	return (0);
+}

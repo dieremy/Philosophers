@@ -26,24 +26,14 @@ enum e_fd
     err,
 };
 
-// enum e_state
-// {
-//     SLEEPING = 0,
-//     TAKE_FORKS = 1,
-//     EATING = 2,
-//     DEAD = 4,
-//     THINKING = 5,
-//     FULL = 10,
-// };
-
 enum e_state
 {
-    SLEEPING = 0,
-    TAKE_FORKS = 1,
-    EATING = 2,
-    DEAD = 3,
-    THINKING = 4,
-    FULL = 5,
+    SLEEPING,
+    TAKE_FORKS,
+    EATING,
+    DEAD,
+    THINKING,
+    FULL,
 };
 
 enum e_error
@@ -64,10 +54,6 @@ typedef struct  s_philos
 	struct timeval	start_eat;
 	pthread_mutex_t	*fork_r;
 	pthread_mutex_t	*fork_l;
-	// int				eating;  
-	// int				last_meal;
-    // unsigned long	time_to_die;
-	// pthread_mutex_t	check;
 }              t_philos;
 
 typedef struct  s_tab
@@ -81,20 +67,19 @@ typedef struct  s_tab
     unsigned long	time_to_sleep;
 	struct timeval	start;
 	pthread_mutex_t	*forks;
-    // int             dead;
-	// int				checker;
-	// pthread_t		*tid;
-    // int				eat_times;
-    // pthread_mutex_t	post;
-	// pthread_mutex_t	check;
 }               t_tab;
 
-unsigned long   gap_time(struct timeval v);
-void	        *check_p(void *data);
-int 	        ft_atoi(char *str);
-int	            send_state(t_philos *philo, int i);
-int		        print_error(int str);
-int             ft_esc(t_tab *t);
+unsigned long	gap_time(struct timeval v);
+int 			take_fork_act(t_philos *philo, int i);
+int				send_state(t_philos *philo, int i);
+int				final_act(t_philos *philo, int i);
+int 			think_act(t_philos *philo, int i);
+int				sleep_act(t_philos *philo, int i);
+int				eat_act(t_philos *philo, int i);
+int				print_error(int str);
+int				ft_atoi(char *str);
+int				ft_esc(t_tab *t);
+void			*check_p(void *data);
 // void	messages(int str, t_philos *philo);
 // void	take_forks(t_philos *philo);
 // void	drop_forks(t_philos *philo);

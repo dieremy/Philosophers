@@ -12,24 +12,28 @@
 
 #include "philo.h"
 
-int	ft_esc(t_tab *t)
+int	send_state(t_philos *philo, int i)
 {
-	int	i;
-
-	i = 0;
-	while (i < t->num_philo)
+	if (philo->tab->meal_cnt != 0
+		&& philo->tab->full == philo->tab->num_philo)	
+		return (0);	
+	if (gap_time(philo[i].start_sleep) > philo[i].tab->time_to_die)
+        philo[i].state = DEAD;
+	if (philo[i].prev_state != philo[i].state)
 	{
-		pthread_mutex_destroy(&t->forks[i]);
-		pthread_mutex_destroy(t->philo[i].fork_l);
-		pthread_mutex_destroy(t->philo[i].fork_r);
-		i++;
+        if (philo[i].state == SLEEPING)
+            sleep_act(philo, i);
+        else if (philo[i].state == THINKING)
+            think_act(philo, i);
+        else if (philo[i].state == TAKE_FORKS)
+			take_fork_act(philo, i);
+        else if (philo[i].state == EATING)
+			eat_act(philo, i);
+        else if (philo[i].state == DEAD)
+			if (!final_act(philo, i))
+				return (0);
 	}
-	if (t->forks)
-		free(t->forks);
-	if (t->philo)
-		free(t->philo);
-	free(t);
-	return (0);
+	return (1);
 }
 
 void	set_table(t_philos *philo, t_tab *t)
@@ -61,8 +65,8 @@ int	init(t_philos *philo, t_tab *t)
 		philo[i].tab = t;
 		philo[i].id = i;
 		pthread_mutex_init(t->forks + i, NULL);
-		philo[i].state = 0; //5 thinking
-		philo[i].prev_state = 5; //0 sleeping
+		philo[i].state = THINKING;
+		philo[i].prev_state = SLEEPING;
 		philo[i].eat_times = 0;
 		gettimeofday(&philo[i].start_sleep, NULL);
 	}
