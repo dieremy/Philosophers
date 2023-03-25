@@ -33,25 +33,6 @@ int	start_dad(t_tab *t)
 		}
 	}
 	return (0);
-
-	// int	count_m;
-	// int	status;
-
-	// count_m = 0;
-	// while (waitpid(0, &status, 0))
-	// {
-	// 	if (((status >> 8) & 0x0000000ff) == 0)
-	// 	{
-	// 		kill(0, SIGKILL);
-	// 		break ;
-	// 	}
-	// 	if (((status >> 8) & 0x0000000ff) == 1)
-	// 	{
-	// 		count_m++;
-	// 		if (count_m == t->num_philo)
-	// 			break ;
-	// 	}
-	// }
 }
 
 int	check_params(t_tab *t, int ac, char *av[])
@@ -60,8 +41,8 @@ int	check_params(t_tab *t, int ac, char *av[])
 	t->time_to_die = ft_atoi(av[2]);
 	t->time_to_eat = ft_atoi(av[3]);
 	t->time_to_sleep = ft_atoi(av[4]);
+	t->philo.eat_times = 0;
 	t->meal_cnt = -1;
-	t->full = 0;
 	if (ac == 6)
 		t->meal_cnt = ft_atoi(av[5]);
 	if (t->time_to_die < 60 || t->time_to_sleep < 60 || t->time_to_eat < 60)
@@ -90,8 +71,8 @@ int	main(int ac, char **av)
 		t = (t_tab *)malloc(sizeof(t_tab));
 		if (check_params(t, ac, av))
 			return (1);
-		i = 0;
-		while (i < t->num_philo)
+		i = -1;
+		while (++i < t->num_philo)
 		{
 			t->parent = fork();
 			if (!t->parent)
@@ -99,13 +80,10 @@ int	main(int ac, char **av)
 				t->philo.id = i + 1;
 				break;
 			}
-			i++;
 		}
 		if (!t->parent)
 			start_child(t);
 		start_dad(t);
-		// sem_close(t->sem_f);
-		// sem_close(t->sem_p);
 		free(t);
 	}	
 	return (0);

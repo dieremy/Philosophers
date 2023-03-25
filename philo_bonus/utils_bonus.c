@@ -12,6 +12,17 @@
 
 #include "philo_bonus.h"
 
+int	deadly_af(t_tab *t)
+{
+	if (gap_time(t->philo.start_sleep) >= t->time_to_die)
+	{
+		sem_wait(t->sem_p);
+		printf("%lu\t%d\tDIED\n", gap_time(t->start), t->philo.id);
+		exit(0);
+	}
+	return (0);
+}
+
 unsigned long	gap_time(struct timeval v)
 {
 	struct timeval	t;

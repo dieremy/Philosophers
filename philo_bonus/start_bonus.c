@@ -17,7 +17,7 @@ int	wake(t_tab *t)
 	deadly_af(t);
 	if (gap_time(t->philo.start_sleep) >= t->time_to_sleep)
 	{
-		t->philo.state = 1; //THINKING;
+		t->philo.state = THINKING;
 		was_thinking(t);
 		return (0);
 	}
@@ -35,19 +35,17 @@ int	was_thinking(t_tab *t)
 	printf("%lu\t%d\tHAS TAKEN A FORK\n", gap_time(t->start), t->philo.id);
 	sem_post(t->sem_p);
 	deadly_af(t);
-	t->philo.state = 2; ///TAKE_FORKS;
+	t->philo.state = TAKE_FORKS;
 	was_fork(t);
 	return (0);
 }
 
 int	was_fork(t_tab *t)
 {
-	// deadly_af(t);
 	if (t->num_philo == 1)
 	{
 		sem_wait(t->sem_p);
 		printf("%lu\t%d\tDIED\n", gap_time(t->start), t->philo.id);
-		// sem_post(t->sem_p);
 		exit(0);
 	}
 	deadly_af(t);
@@ -55,13 +53,11 @@ int	was_fork(t_tab *t)
 	sem_wait(t->sem_p);
 	printf("%lu\t%d\tHAS TAKEN A FORK\n", gap_time(t->start), t->philo.id);
 	printf("%lu\t%d\tIS EATING\n", gap_time(t->start), t->philo.id);
-	// deadly_af(t);
 	sem_post(t->sem_p);
 	deadly_af(t);
 	gettimeofday(&t->philo.start_eat, NULL);
-	t->philo.state = 3; //EATING;
+	t->philo.state = EATING;
 	was_eating(t);
-	// deadly_af(t);
 	return (0);
 }
 
@@ -81,52 +77,34 @@ int	was_eating(t_tab *t)
 			sem_close(t->sem_p);
 			exit(1);
 		}
-		// deadly_af(t);
 		sem_post(t->sem_f);
 		sem_post(t->sem_f);
 		sem_wait(t->sem_p);
 		printf("%lu\t%d\tIS SLEEPING\n", gap_time(t->start), t->philo.id);
 		sem_post(t->sem_p);
-		// deadly_af(t);
 		gettimeofday(&t->philo.start_sleep, NULL);
-		t->philo.state = 0; //SLEEPING; 0
-		// gettimeofday(&t->philo.start_sleep, NULL);
+		t->philo.state = SLEEPING;
 		wake(t);
 		return (0);
 	}	
 	return (1);
 }
 
-int	deadly_af(t_tab *t)
-{
-	if (gap_time(t->philo.start_sleep) > t->time_to_die)
-	{
-		sem_wait(t->sem_p);
-		printf("%lu\t%d\tDIED\n", gap_time(t->start), t->philo.id);
-		exit(0);
-	}
-	return (0);
-}
-
 int	start_child(t_tab *t)
 {
-	t->philo.eat_times = 0;
-	t->philo.full = 0;
-    t->philo.state = 1; ///THINKING;
+    t->philo.state = THINKING;
 	gettimeofday(&t->philo.start_sleep, NULL);
 	gettimeofday(&t->start, NULL);
     while (1)
     {
-		// if (t->philo.state == 0) ///sleep
-		// 	wake(t);
-         if (t->philo.state == 1) //think
+		if (t->philo.state == SLEEPING)
+			wake(t);
+         if (t->philo.state == THINKING)
 			was_thinking(t);
-		// else if (t->philo.state == TAKE_FORKS)
-		// 	was_fork(t);
-		else if (t->philo.state == 3) //eat
+		else if (t->philo.state == TAKE_FORKS)
+			was_fork(t);
+		else if (t->philo.state == EATING)
 			was_eating(t);
-		// else if (t->philo.state == FULL)
-		// 	gettimeofday(&t->philo.start_sleep, NULL);
     }
 	return (0);
 }
