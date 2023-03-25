@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   start.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: robegarc <robegarc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/24 10:12:20 by robegarc          #+#    #+#             */
+/*   Updated: 2023/03/24 11:34:54 by robegarc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	wake(t_philos *philo)
@@ -15,17 +27,6 @@ int	take_fork(t_philos *philo)
 {
 	if (pthread_mutex_lock(philo->fork_l) == 0)
 		philo->state = TAKE_FORKS;
-	// if (philo->state == TAKE_FORKS)
-	// {
-	// 	if (philo->tab->num_philo == 1)
-	// 		philo->state = DEAD;
-	// 	else if (pthread_mutex_lock(philo->fork_r) == 0)
-	// 	{
-	// 		philo->state = EATING;
-	// 		gettimeofday(&philo->start_eat, NULL);
-	// 		return (0);
-	// 	}
-	// }
 	return (0);
 }
 
@@ -76,7 +77,7 @@ void	*check_p(void *data)
 	{
 		usleep(100);
 		if (philo->state == SLEEPING)
-			wake(philo); 
+			wake(philo);
 		else if (philo->state == THINKING)
 			take_fork(philo);
 		else if (philo->state == TAKE_FORKS)

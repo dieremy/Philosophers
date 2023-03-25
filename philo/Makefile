@@ -6,13 +6,13 @@
 #    By: robegarc <robegarc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/16 14:41:08 by robegarc          #+#    #+#              #
-#    Updated: 2023/03/16 17:44:42 by robegarc         ###   ########.fr        #
+#    Updated: 2023/03/24 10:02:09 by robegarc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-BRIGHT_BLUE=\e[4;94m
-MAGENTA=\e[4;35m
-DEFAULT=\e[0m
+BRIGHT_BLUE=\033[4;94m
+MAGENTA=\033[4;35m
+DEFAULT=\033[0m
 
 SRC = start.c main.c utils.c check_state.c
 OBJ = $(SRC:.c=.o)
