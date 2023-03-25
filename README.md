@@ -109,6 +109,8 @@ To release or signal a semaphore we can use the sem_post function -> <i>int sem_
 
 A semaphore is initialized
 by using sem_open() for IPC
+-> <i>sem_open(sem_t *sem);</i>
+
 by using the sem_init function for process and threads
 -> <i>int sem_init(sem_t *sem, int pshared, unsigned int value);</i>
 - sem = semaphore to be initialized
