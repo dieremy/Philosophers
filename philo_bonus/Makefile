@@ -1,8 +1,20 @@
-BRIGHT_BLUE=\e[0;94m
-MAGENTA=\e[0;35m
-DEFAULT=\e[0m
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: robegarc <robegarc@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/03/25 12:40:22 by robegarc          #+#    #+#              #
+#    Updated: 2023/03/25 12:51:36 by robegarc         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-SRC_B = start_b.c main_b.c utils_b.c
+BRIGHT_BLUE=\033[0;94m
+MAGENTA=\033[0;35m
+DEFAULT=\033[0m
+
+SRC_B = start_bonus.c main_bonus.c utils_bonus.c
 OBJ_B = $(SRC_B:.c=.o)
 CC = gcc -g
 FLAGS = -pthread -Wall -Werror -Wextra
@@ -19,7 +31,7 @@ all: $(NAME_B)
 
 clean:
 	@rm -f $(OBJ_B)
-	@echo "$(MAGENTA)bonus objs DELETION$(DEFAULT)"
+	@echo "$(MAGENTA)objs DELETION$(DEFAULT)"
 
 fclean: clean
 	@rm -f $(NAME_B)
