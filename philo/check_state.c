@@ -48,7 +48,7 @@ int	eat_act(t_philos *philo, int i)
 
 int	final_act(t_philos *philo, int i)
 {
-	printf("%lu\t%d\tDEAD AF\n", gap_time(philo[i].tab->start),
+	printf("%lu\t%d\tDIED\n", gap_time(philo[i].tab->start),
 		philo[i].id);
 	return (0);
 }
