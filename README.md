@@ -43,7 +43,7 @@ hello world
 
 # - Threads -
 
-A program under execution is known as process an a thread is a basic unit of
+A program under execution is known as process and a thread is a basic unit of
 execution.
 So each program has a number of processes associated with it and each process has a number of threads executing in it.
 A thread is a basic unit of CPU utilization.
