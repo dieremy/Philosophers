@@ -92,19 +92,19 @@ int	was_eating(t_tab *t)
 
 int	start_child(t_tab *t)
 {
-    t->philo.state = THINKING;
+	t->philo.state = THINKING;
 	gettimeofday(&t->philo.start_sleep, NULL);
 	gettimeofday(&t->start, NULL);
-    while (1)
-    {
+	while (1)
+	{
 		if (t->philo.state == SLEEPING)
 			wake(t);
-         if (t->philo.state == THINKING)
+		if (t->philo.state == THINKING)
 			was_thinking(t);
 		else if (t->philo.state == TAKE_FORKS)
 			was_fork(t);
 		else if (t->philo.state == EATING)
 			was_eating(t);
-    }
+	}
 	return (0);
 }

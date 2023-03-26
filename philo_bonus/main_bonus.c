@@ -23,13 +23,13 @@ int	start_dad(t_tab *t)
 		if (((state >> 8) & 0x0000000ff) == 0)
 		{
 			kill(0, SIGKILL);
-			break;
+			break ;
 		}
 		if (((state >> 8) & 0x0000000ff) == 1)
 		{
 			cnt_m++;
 			if (cnt_m == t->num_philo)
-				break;
+				break ;
 		}
 	}
 	return (0);
@@ -37,6 +37,11 @@ int	start_dad(t_tab *t)
 
 int	check_params(t_tab *t, int ac, char *av[])
 {
+	if (ac < 5 || ac > 6)
+		print_error(NB_INPUT);
+	if (ft_atoi(av[1]) < 1 || ft_atoi(av[1]) > 200 || ft_atoi(av[2]) < 60
+		|| ft_atoi(av[3]) < 60 || ft_atoi(av[4]) < 60)
+		print_error(WRG_INPUT);
 	t->num_philo = ft_atoi(av[1]);
 	t->time_to_die = ft_atoi(av[2]);
 	t->time_to_eat = ft_atoi(av[3]);
@@ -45,8 +50,6 @@ int	check_params(t_tab *t, int ac, char *av[])
 	t->meal_cnt = -1;
 	if (ac == 6)
 		t->meal_cnt = ft_atoi(av[5]);
-	if (t->time_to_die < 60 || t->time_to_sleep < 60 || t->time_to_eat < 60)
-		print_error(WRG_INPUT);
 	write(out, "TIME\tPHILO\tACTION\n\n", 19);
 	t->forks = "/forks";
 	t->post = "/post";
@@ -62,29 +65,21 @@ int	main(int ac, char **av)
 	t_tab		*t;
 	int			i;
 
-	if (ac < 5 || ac > 6)
-		print_error(NB_INPUT);
-	if (ft_atoi(av[1]) < 1 || ft_atoi(av[1]) > 200)
-		print_error(WRG_INPUT);
-	else
+	t = (t_tab *)malloc(sizeof(t_tab));
+	check_params(t, ac, av);
+	i = -1;
+	while (++i < t->num_philo)
 	{
-		t = (t_tab *)malloc(sizeof(t_tab));
-		if (check_params(t, ac, av))
-			return (1);
-		i = -1;
-		while (++i < t->num_philo)
-		{
-			t->parent = fork();
-			if (!t->parent)
-			{
-				t->philo.id = i + 1;
-				break;
-			}
-		}
+		t->parent = fork();
 		if (!t->parent)
-			start_child(t);
-		start_dad(t);
-		free(t);
-	}	
+		{
+			t->philo.id = i + 1;
+			break ;
+		}
+	}
+	if (!t->parent)
+		start_child(t);
+	start_dad(t);
+	free(t);
 	return (0);
 }
