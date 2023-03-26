@@ -71,14 +71,14 @@ typedef struct s_tab
 }				t_tab;
 
 unsigned long	gap_time(struct timeval v);
-int				was_thinking(t_tab *t);
+int				shut_thinking(t_tab *t);
 int				start_child(t_tab *t);
-int				was_eating(t_tab *t);
+int				just_chillin(t_tab *t);
 int				print_error(int str);
 int				start_dad(t_tab *t);
 int				deadly_af(t_tab *t);
 int				ft_atoi(char *str);
-int				was_fork(t_tab *t);
+int				lets_eat(t_tab *t);
 int				wake(t_tab *t);
 
 #endif

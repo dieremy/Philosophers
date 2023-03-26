@@ -18,13 +18,13 @@ int	wake(t_tab *t)
 	if (gap_time(t->philo.start_sleep) >= t->time_to_sleep)
 	{
 		t->philo.state = THINKING;
-		was_thinking(t);
+		shut_thinking(t);
 		return (0);
 	}
 	return (1);
 }
 
-int	was_thinking(t_tab *t)
+int	shut_thinking(t_tab *t)
 {
 	sem_wait(t->sem_p);
 	printf("%lu\t%d\tIS THINKING\n", gap_time(t->start), t->philo.id);
@@ -36,11 +36,11 @@ int	was_thinking(t_tab *t)
 	sem_post(t->sem_p);
 	deadly_af(t);
 	t->philo.state = TAKE_FORKS;
-	was_fork(t);
+	lets_eat(t);
 	return (0);
 }
 
-int	was_fork(t_tab *t)
+int	lets_eat(t_tab *t)
 {
 	if (t->num_philo == 1)
 	{
@@ -57,11 +57,11 @@ int	was_fork(t_tab *t)
 	deadly_af(t);
 	gettimeofday(&t->philo.start_eat, NULL);
 	t->philo.state = EATING;
-	was_eating(t);
+	just_chillin(t);
 	return (0);
 }
 
-int	was_eating(t_tab *t)
+int	just_chillin(t_tab *t)
 {
 	deadly_af(t);
 	if (gap_time(t->philo.start_eat) >= t->time_to_eat)
@@ -100,11 +100,11 @@ int	start_child(t_tab *t)
 		if (t->philo.state == SLEEPING)
 			wake(t);
 		if (t->philo.state == THINKING)
-			was_thinking(t);
+			shut_thinking(t);
 		else if (t->philo.state == TAKE_FORKS)
-			was_fork(t);
+			lets_eat(t);
 		else if (t->philo.state == EATING)
-			was_eating(t);
+			just_chillin(t);
 	}
 	return (0);
 }
